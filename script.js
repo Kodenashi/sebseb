@@ -21,6 +21,7 @@ function createMonthCard(month) {
     const img = document.createElement('img');
     img.src = savedImage;
     placeholder.appendChild(img);
+    enableImagePreview(img);
   } else {
     placeholder.textContent = '📷 No photo yet';
   }
@@ -60,6 +61,7 @@ function uploadImage(month, placeholder) {
         const img = document.createElement('img');
         img.src = reader.result;
         placeholder.appendChild(img);
+        enableImagePreview(img);
       };
       reader.readAsDataURL(file);
     }
@@ -89,3 +91,28 @@ for (let i = 1; i <= 12; i++) {
 }
 
 downloadAllBtn.addEventListener('click', downloadAllPhotos);
+
+// Modal elements
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const closeBtn = document.querySelector('.close');
+
+// Function to open modal on image click
+function enableImagePreview(img) {
+  img.addEventListener('click', () => {
+    modal.style.display = 'block';
+    modalImg.src = img.src;
+  });
+}
+
+// Close modal
+closeBtn.onclick = function() {
+  modal.style.display = 'none';
+};
+
+// Close when clicking outside the image
+modal.onclick = function(e) {
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+};
