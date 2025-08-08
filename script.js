@@ -5,6 +5,9 @@ const currentAgeMonths = 5; // Change this as baby grows
 function createMonthCard(month) {
   const card = document.createElement('div');
   card.classList.add('month-card');
+  if (month === currentAgeMonths) {
+    card.classList.add('current');
+  }
 
   const title = document.createElement('h2');
   title.textContent = `Month ${month}`;
@@ -19,30 +22,26 @@ function createMonthCard(month) {
     img.src = savedImage;
     placeholder.appendChild(img);
   } else {
-    placeholder.textContent = 'No photo yet';
+    placeholder.textContent = '📷 No photo yet';
   }
-
   card.appendChild(placeholder);
 
   const buttonsDiv = document.createElement('div');
   buttonsDiv.classList.add('buttons');
 
   const uploadBtn = document.createElement('button');
-  uploadBtn.textContent = 'Upload';
+  uploadBtn.textContent = '📤 Upload';
+  uploadBtn.classList.add('upload');
   uploadBtn.addEventListener('click', () => uploadImage(month, placeholder));
 
   const removeBtn = document.createElement('button');
-  removeBtn.textContent = 'Remove';
+  removeBtn.textContent = '🗑 Remove';
   removeBtn.classList.add('remove');
   removeBtn.addEventListener('click', () => removeImage(month, placeholder));
 
   buttonsDiv.appendChild(uploadBtn);
   buttonsDiv.appendChild(removeBtn);
   card.appendChild(buttonsDiv);
-
-  if (month === currentAgeMonths) {
-    card.style.border = '2px solid gold';
-  }
 
   return card;
 }
@@ -70,7 +69,7 @@ function uploadImage(month, placeholder) {
 
 function removeImage(month, placeholder) {
   localStorage.removeItem(`month${month}`);
-  placeholder.innerHTML = 'No photo yet';
+  placeholder.innerHTML = '📷 No photo yet';
 }
 
 function downloadAllPhotos() {
